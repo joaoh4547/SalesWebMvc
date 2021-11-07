@@ -40,9 +40,24 @@ namespace SalesWebMvc.Controllers
             return View(result);
         }
 
-        public IActionResult GroupingSearch()
+        public async Task<IActionResult> GroupingSearch(DateTime? initial, DateTime? finish)
         {
-            return View();
+            if (!initial.HasValue)
+            {
+                initial = new DateTime(DateTime.Now.Year, 1, 1);
+            }
+
+            if (!finish.HasValue)
+            {
+                finish = DateTime.Now;
+            }
+
+            ViewData["initial"] = initial.Value.ToString("yyyy-MM-dd");
+            ViewData["finish"] = finish.Value.ToString("yyyy-MM-dd");
+
+            var result = await _salesRecordService.FindByDateGroupingAsync(initial, finish);
+
+            return View(result);
         }
     }
 }

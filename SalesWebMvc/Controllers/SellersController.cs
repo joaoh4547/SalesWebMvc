@@ -82,6 +82,7 @@ namespace SalesWebMvc.Controllers
             catch (IntegrityException ex)
             {
                 return RedirectToAction(nameof(Error), new { ex.Message });
+               
             }
         }
 
@@ -95,6 +96,7 @@ namespace SalesWebMvc.Controllers
             var obj = await _sellerService.FindByIdAsync(id.Value);
             if (obj == null)
             {
+              
                 return RedirectToAction(nameof(Error), new { Message = "Id Not Found" });
             }
             return View(obj);
